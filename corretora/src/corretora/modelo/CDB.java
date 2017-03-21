@@ -1,38 +1,60 @@
 package corretora.modelo;
 
-import java.util.Calendar;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
-public class CDB extends Investimento implements Tributavel {
+public class CDB extends FundoDeInvestimento implements Tributavel {
 
-	public CDB(Calendar dataInicio, Calendar dataFinal, Double valorInicial) {
-		super(dataInicio, dataFinal, valorInicial);
+	private DateTime dataFinal;
+
+	public DateTime getDataFinal() {
+		return dataFinal;
 	}
 
-	public double calculaImposto(Calendar dataInicio, Calendar dataFinal, Double valor){
-			
-			
-			int meses = (dataFinal.get(Calendar.YEAR) * 12 + dataFinal.get(Calendar.MONTH))
-		        - (dataInicio.get(Calendar.YEAR) * 12 + dataInicio.get(Calendar.MONTH));
-		
-		
-			//print de teste
-			System.out.println("meses: " + meses);
-			
-			//teste calculo data
-			if(meses <= 12) {
-				//paga 25
-				System.out.println("paga 25");
-				
+	public void setDataFinal(DateTime dataFinal) {
+		this.dataFinal = dataFinal;
+	}
+
+	public double getImposto() {
+
+		int dias = Days.daysBetween(dataInicial, dataFinal).getDays();
+
+		// print de teste
+		//System.out.println("dias: " + dias);
+
+		if ((dataInicial.year().isLeap() && !dataFinal.year().isLeap())
+				&& (!dataInicial.year().isLeap() && !dataFinal.year().isLeap())) {
+
+			// teste calculo data
+			if (dias <= 365) {
+				//System.out.println("paga 25%");
+				return valorInicial*0.25;
+			} else if (dias > 365 && dias <= 730) {
+				//System.out.println("paga 20%");
+				return valorInicial*0.20;
+
+			} else {
+				//System.out.println("paga 15%");
+				return valorInicial*0.15;
 			}
-			else if(meses > 12 && meses < 24) {
-				System.out.println("paga 20");
-				
+
+		} else {
+			if (dias <= 366) {
+				//System.out.println("paga 25%");
+				return valorInicial*0.25;
+
+			} else if (dias > 366 && dias <= 730) {
+				//System.out.println("paga 20%");
+				return valorInicial*0.2;
+
+			} else {
+				//System.out.println("paga 15%");
+				return valorInicial*0.15;
 			}
-			else {
-				//paga 15
-				System.out.println("paga 15");
-			}
-			
-			return valor ;
 		}
+	}
+	
+	public String toString() {
+		return super.toString() + " - Data Final: " + dataFinal.toString("dd/MM/yyyy");
+	}
 }

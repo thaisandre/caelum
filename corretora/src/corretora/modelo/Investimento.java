@@ -1,43 +1,34 @@
 package corretora.modelo;
 
-import java.util.Calendar;
+import org.joda.time.DateTime;
 
-public class Investimento {
+public abstract class Investimento {
 	
-	protected Calendar dataInicio;
-	protected Calendar dataFinal;
-	protected Double valorInicial;
+	protected DateTime dataInicial;
+	protected double valorInicial;
 
-	public Investimento(Calendar dataInicio, Calendar dataFinal, Double valorInicial) {
-		super();
-		this.dataInicio = dataInicio;
-		this.dataFinal = dataFinal;
-		this.valorInicial = valorInicial;
-	}
-
-	public Calendar getDataInicio() {
-		return dataInicio;
+	public DateTime getDataInicial() {
+		return dataInicial;
 	}
 	
-	public Calendar getDataFinal() {
-		return dataFinal;
-	}
-	
-	public Double getValorInicial() {
+	public double getValorInicial() {
 		return valorInicial;
 	}
 	
-	public void setDataInicio(Calendar dataInicio) {
-		this.dataInicio = dataInicio;
+	public void setDataInicio(DateTime dataInicial) {
+		this.dataInicial = dataInicial; 
 	}
 
-	public void setDataFinal(Calendar dataFinal) {
-		this.dataFinal = dataFinal;
-	}
-
-	public void setValorInicial(Double valorInicial) {
+	public void setValorInicial(double valorInicial) {
 		this.valorInicial = valorInicial;
 	}
+	
+	@Override
+	public String toString() {
+		return "ValorInicial: " + valorInicial  
+				+ " - DataInicial: " + dataInicial.toString("dd/MM/yyyy");
+	}
+	
 	
 	
 }
