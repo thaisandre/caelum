@@ -12,60 +12,22 @@ public class principal {
 
 	public static void main(String[] args) throws ParseException {
 		
-		double valorInicial = 1000.0;
-		double valorFinal = 0;
-		double imposto = 0;
-
+		//-> obs.: alguns calculos podem não bater (falta tratar ano bissexto)
+		
+		//data para testes
 		DateTime dataInicial = new DateTime(2016, 1, 1, 0, 0);
 		DateTime dataFinal = new DateTime(2017, 1, 1, 0, 0);
 		
 		//teste CDB
-		CDB cdb = new CDB();
-		cdb.setValorInicial(valorInicial);
-		cdb.setDataInicio(dataInicial);
-		cdb.setDataFinal(dataFinal);
-		
-		System.out.println("-> CDB");
-		System.out.println(cdb.toString());
-		
-		imposto = cdb.getImposto();
-		System.out.println("Imposto: " + imposto);
-		valorFinal = valorInicial - imposto;
-		System.out.println("Valor final: " + valorFinal);
-		
-		
-		System.out.println();
-		System.out.println("==========");
-		System.out.println();
-		
-		LCI lci = new LCI();
-		lci.setValorInicial(valorInicial);
-		lci.setDataInicio(dataInicial);
-		lci.setDataFinal(dataFinal);
-		
-		System.out.println("-> LCI");
-		System.out.println(cdb.toString());
-		
-		System.out.println("LCI não possui imposto.");
-		System.out.println("Valor final: " + valorInicial);		
-	
-		System.out.println();
-		System.out.println("==========");
-		System.out.println();
+		CDB cdb = new CDB(1000.0, dataInicial, dataFinal);
+		System.out.println("Imposto CDB: " + cdb.getImposto());	
+
+		//teste LCI
+		LCI lci = new LCI(1000.0, dataInicial, dataFinal);
+		System.out.println("Imposto LCI: " + lci.getImposto());	
 		
 		//teste FDI
-		valorFinal = 1000.0;
-		FundoDeInvestimento fdi = new FundoDeInvestimento();
-		fdi.setValorInicial(valorInicial);
-		fdi.setDataInicio(dataInicial);
-		
-		System.out.println("-> Fundo de Investimento");
-		System.out.println(fdi.toString());
-		imposto = fdi.getImposto();
-		
-		System.out.println("Imposto: " + imposto);
-		valorFinal = valorFinal - imposto - fdi.getTaxa();	
-		System.out.println("Valor final: " + valorFinal);		
+		FundoDeInvestimento fdi = new FundoDeInvestimento(1000.0, dataFinal);
+		System.out.println("Imposto Fundo: " + fdi.getImposto());		
 	}
-
 }

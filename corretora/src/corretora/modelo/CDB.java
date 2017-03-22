@@ -3,55 +3,23 @@ package corretora.modelo;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
-public class CDB extends FundoDeInvestimento implements Tributavel {
+public class CDB extends Investimento implements Tributavel {
 
 	private DateTime dataFinal;
+	
+	public CDB(double valorInicial, DateTime dataInicial, DateTime dataFinal){
+		super(valorInicial, dataInicial);
+		this.dataFinal = dataFinal;
+	}
 
 	public DateTime getDataFinal() {
 		return dataFinal;
 	}
 
-	public void setDataFinal(DateTime dataFinal) {
-		this.dataFinal = dataFinal;
-	}
-
 	public double getImposto() {
-
 		int dias = Days.daysBetween(dataInicial, dataFinal).getDays();
-
-		// print de teste
-		//System.out.println("dias: " + dias);
-
-		if ((dataInicial.year().isLeap() && !dataFinal.year().isLeap())
-				&& (!dataInicial.year().isLeap() && !dataFinal.year().isLeap())) {
-
-			// teste calculo data
-			if (dias <= 365) {
-				//System.out.println("paga 25%");
-				return valorInicial*0.25;
-			} else if (dias > 365 && dias <= 730) {
-				//System.out.println("paga 20%");
-				return valorInicial*0.20;
-
-			} else {
-				//System.out.println("paga 15%");
-				return valorInicial*0.15;
-			}
-
-		} else {
-			if (dias <= 366) {
-				//System.out.println("paga 25%");
-				return valorInicial*0.25;
-
-			} else if (dias > 366 && dias <= 730) {
-				//System.out.println("paga 20%");
-				return valorInicial*0.2;
-
-			} else {
-				//System.out.println("paga 15%");
-				return valorInicial*0.15;
-			}
-		}
+		Taxa taxa = new Taxa();
+		return valorInicial*taxa.Apos(dias);
 	}
 	
 	public String toString() {

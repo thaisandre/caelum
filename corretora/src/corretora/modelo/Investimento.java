@@ -6,7 +6,12 @@ public abstract class Investimento {
 	
 	protected DateTime dataInicial;
 	protected double valorInicial;
-
+	
+	public Investimento(double valorInicial, DateTime dataInicial) {
+		this.valorInicial = valorInicial;
+		this.dataInicial = dataInicial;
+	}
+	
 	public DateTime getDataInicial() {
 		return dataInicial;
 	}
@@ -15,20 +20,9 @@ public abstract class Investimento {
 		return valorInicial;
 	}
 	
-	public void setDataInicio(DateTime dataInicial) {
-		this.dataInicial = dataInicial; 
-	}
-
-	public void setValorInicial(double valorInicial) {
-		this.valorInicial = valorInicial;
-	}
-	
 	@Override
 	public String toString() {
 		return "ValorInicial: " + valorInicial  
 				+ " - DataInicial: " + dataInicial.toString("dd/MM/yyyy");
 	}
-	
-	
-	
 }
